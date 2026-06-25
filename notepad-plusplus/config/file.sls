@@ -64,13 +64,14 @@ Ensure NPP Admin Config Dir for {{ admin }} exists:
     - name: '{{ admin_appdata }}'
     - makedirs: True
     - onlyif:
-      - shell: powershell
-      - cmd: |
+      - fun: cmd.run
+        cmd: |
           if (Get-LocalUser -Name "{{ admin }}" -ErrorAction SilentlyContinue) {
             exit 0
           } else {
             exit 1
           }
+        shell: powershell
 {% endfor %}
 
 Manage Notepad++ Updater Config:
